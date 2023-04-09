@@ -1,0 +1,15 @@
+openapi: 3.0.3
+info:
+  title: TrainIt
+  version: 1.0.ß
+
+servers:
+  - url: 'https://localhost:8085/api'
+
+paths:
+  /login:
+    get:
+      operationId: checkLogin
+      responses: 
+        200:
+          $ref: 

@@ -1,0 +1,13 @@
+.center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 10vh;
+  }
+
+  .item-width {
+    width: 30%;
+    position: relative;
+    left: 35%;
+  }
