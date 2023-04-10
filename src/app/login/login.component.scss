@@ -4,10 +4,28 @@
     align-items: center;
     text-align: center;
     min-height: 10vh;
-  }
+    opacity: 0.8;
+}
 
-  .item-width {
-    width: 30%;
+.item-width {
+    width: 22%;
     position: relative;
-    left: 35%;
-  }
+    opacity: 0.85;
+    left: 39%;
+}
+
+.image {
+      position: absolute;
+      top: 0px;
+      left: 47%;
+      float: right;
+}
+
+.title {
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    font-weight: 400;
+    color: #2f7af3;
+    opacity: 0.8;
+} 

@@ -1,5 +1,7 @@
 <div *ngIf="!_output" class="buttonClicked"> 
-    <h1 class="font-light text-green-500 font-semibold">Login - TrainIt</h1>
+    <img class="image" src="https://img.freepik.com/free-vector/blue-geometric-woman-running-illustration_1284-52845.jpg?w=400">
+    <h1 class="title">Login - TrainIt</h1>
+
     <div class="item-width">
         <input class="p-inputgroup shadow-5" [(ngModel)]="_usernameValue" pInputText placeholder="Username"/>
         <input class="p-inputgroup shadow-5" [(ngModel)]="_passwordValue" pInputText type="password" placeholder = "Password">
@@ -7,7 +9,7 @@
     <p-button
         class="center-screen" 
         label="Login" 
-        styleClass="p-button-raised p-button-text text-green-300 shadow-7"
+        styleClass="p-button-raised p-button-text text-primary-600 shadow-7"
         (click)="_clickEvent()"></p-button>
 </div>
 <app-dashboard *ngIf="_loginPassed"></app-dashboard>
