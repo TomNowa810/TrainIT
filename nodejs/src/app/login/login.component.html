@@ -1,2 +1,15 @@
-<h1 class="font-medium text-bluegray-800">{{variable}}</h1>
-<button class="bg-blue-500 hover:bg-blue-600"> Click me!!</button>
+<div *ngIf="!_output" class="buttonClicked"> 
+    <img class="image" src="https://img.freepik.com/free-vector/blue-geometric-woman-running-illustration_1284-52845.jpg?w=400">
+    <h1 class="title">Login - TrainIt</h1>
+
+    <div class="item-width">
+        <input class="p-inputgroup shadow-5" [(ngModel)]="_usernameValue" pInputText placeholder="Username"/>
+        <input class="p-inputgroup shadow-5" [(ngModel)]="_passwordValue" pInputText type="password" placeholder = "Password">
+    </div>
+    <p-button
+        class="center-screen" 
+        label="Login" 
+        styleClass="p-button-raised p-button-text text-primary-600 shadow-7"
+        (click)="_clickEvent()"></p-button>
+</div>
+<app-dashboard *ngIf="_loginPassed"></app-dashboard>
