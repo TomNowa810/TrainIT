@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: TrainIt
+  version: 1.0.ß
+
+servers:
+  - url: 'https://localhost:8085/api'
+
+paths:
+  /login:
+    get:
+      operationId: checkLogin
+      description: Check if User is known
+      parameters:
+        - $ref: '#/components/parameters/Username'
+        - $ref: '#/components/parameters/Password'
+      responses: 
+        200:
+          $ref: '#/components/schemas/UserDto'
+
+
+components:
+  parameters:
+    Username: 
+      name: userName
+      in: path
+      required: true
+      schema:
+        type: string
+
+    Password: 
+      name: password
+      in: path
+      required: true
+      schema:
+        type: string
+            
+  schemas:
+    UserDto:
+      requiered:
+        - "id"
+        - "name"
+        - "totalRuns"
+      description: Return Object of an User
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        totalRuns:
+          type: integer  
