@@ -12,6 +12,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OpenAPI } from 'build/openapi';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { OpenAPI } from 'build/openapi';
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    CalendarModule,
     ButtonModule,
     PasswordModule
   ],

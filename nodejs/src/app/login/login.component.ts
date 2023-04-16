@@ -13,9 +13,9 @@ export class LoginComponent {
     _output: boolean = false;
     _loginPassed: boolean = false;
 
-    async _clickEvent() {
-      const userNameFinal: string = "Thomas";
-      const passwordFinal: string = "MyPassword12";
+    async _submitLoginCredentials() {
+      const userNameFinal: string = "1";
+      const passwordFinal: string = "1";
 
       if(this._usernameValue == userNameFinal && 
         this._passwordValue == passwordFinal){
