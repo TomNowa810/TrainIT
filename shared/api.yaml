@@ -16,10 +16,19 @@ paths:
         - $ref: '#/components/parameters/Password'
       responses: 
         200:
-          $ref: '#/components/schemas/UserDto'
+          $ref: '#/components/responses/UserResponse'
 
 
 components:
+  responses:
+    UserResponse:
+      description: OK
+      content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/UserDto'
+
   parameters:
     Username: 
       name: userName
@@ -37,7 +46,7 @@ components:
             
   schemas:
     UserDto:
-      requiered:
+      required:
         - "id"
         - "name"
         - "totalRuns"
