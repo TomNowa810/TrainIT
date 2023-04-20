@@ -7,7 +7,6 @@ public class Duration {
 
     private final int hours;
     private final int minutes;
-
     public Duration(int hours, int minutes) {
         this.hours = hours;
         this.minutes = minutes;
