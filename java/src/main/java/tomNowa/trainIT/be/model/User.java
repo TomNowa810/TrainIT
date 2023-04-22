@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
@@ -25,4 +25,11 @@ public class User {
     @NotNull
     private String password;
 
+
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
 }
+
+
