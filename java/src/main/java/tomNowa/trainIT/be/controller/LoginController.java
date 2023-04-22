@@ -20,4 +20,11 @@ public class LoginController implements LoginApi {
     public ResponseEntity<RunnerDto> checkLogin(final String userName, final String password){
         return ResponseEntity.ok().body(loginService.checkUser(userName, password));
     }
+
+    @Override
+    public ResponseEntity<Void> createUser(final String userName, final String password){
+        loginService.createUser(userName,password);
+        return ResponseEntity.ok().build();
+    }
+
 }

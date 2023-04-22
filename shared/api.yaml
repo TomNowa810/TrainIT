@@ -18,6 +18,19 @@ paths:
         200:
           $ref: '#/components/responses/UserResponse'
 
+  /login/create/{userName}/{password}:
+    put:
+      operationId: createUser
+      description: create User if he does not already Exists
+      parameters:
+        - $ref: '#/components/parameters/userName'
+        - $ref: '#/components/parameters/password'
+      responses:
+        200:
+          description: ok
+        400:
+          description: User is already known
+
 
 components:
   responses:

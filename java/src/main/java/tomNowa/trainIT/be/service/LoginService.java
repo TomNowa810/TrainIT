@@ -14,12 +14,22 @@ public class LoginService {
         this.userRepo = userRepo;
     }
 
+    //TODO correct implementation
     public RunnerDto checkUser(final String userName, final String password){
         final User user = userRepo.findByUserName(userName);
-
         if (user == null){
             return new RunnerDto();
         }
         return new RunnerDto().name(user.getUserName());
+    }
+
+    public void createUser(final String userName, final String password){
+        final User user = userRepo.findByUserName(userName);
+        if (user != null){
+            //TODO create Exception
+            throw new IllegalArgumentException();
+        }
+        final User newUser = new User(userName, password);
+        userRepo.saveAndFlush(newUser);
     }
 }
