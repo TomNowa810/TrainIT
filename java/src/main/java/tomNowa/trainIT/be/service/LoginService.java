@@ -1,35 +1,59 @@
 package tomNowa.trainIT.be.service;
 
 import org.springframework.stereotype.Service;
+import tomNowa.trainIT.be.exceptions.UserException;
 import tomNowa.trainIT.be.model.User;
 import tomNowa.trainIT.be.model.dto.RunnerDto;
+import tomNowa.trainIT.be.repository.RunRepository;
 import tomNowa.trainIT.be.repository.UserRepository;
+
+import java.util.Optional;
+
+import static tomNowa.trainIT.be.exceptions.UserCodes.*;
 
 @Service
 public class LoginService {
 
     private final UserRepository userRepo;
+    private final RunRepository runRepo;
 
-    public LoginService(final UserRepository userRepo){
+    public LoginService(final UserRepository userRepo, final RunRepository runRepo){
         this.userRepo = userRepo;
+        this.runRepo = runRepo;
     }
 
-    //TODO correct implementation
     public RunnerDto checkUser(final String userName, final String password){
         final User user = userRepo.findByUserName(userName);
         if (user == null){
-            return new RunnerDto();
+            throw new UserException(LOGIN_ERROR_USER_NOT_REGISTERED);
         }
-        return new RunnerDto().name(user.getUserName());
+        if (!user.getPassword().equals(password)){
+            throw new UserException(LOGIN_ERROR_PASSWORD_INCORRECT);
+        }
+        return mapUser2Runner(user);
     }
 
     public void createUser(final String userName, final String password){
         final User user = userRepo.findByUserName(userName);
         if (user != null){
-            //TODO create Exception
-            throw new IllegalArgumentException();
+            throw new UserException(CREATION_ERROR_USER_ALREADY_EXIST);
         }
         final User newUser = new User(userName, password);
         userRepo.saveAndFlush(newUser);
+    }
+
+    private RunnerDto mapUser2Runner(final User user){
+        return new RunnerDto()
+                .id(user.getId())
+                .name(user.getUserName())
+                .totalRuns(getUsersTotalRuns(user.getId()));
+    }
+
+    private int getUsersTotalRuns(final int userId){
+        final Optional<Integer> totalRuns = runRepo.getTotalRuns(userId);
+        if (totalRuns.isEmpty()){
+            return 0;
+        }
+        return totalRuns.get();
     }
 }
