@@ -28,8 +28,16 @@ paths:
       responses:
         200:
           description: ok
+          content:
+              application/json:
+                schema:
+                  type: string
         400:
           description: User is already known
+          content:
+              application/json:
+                schema:
+                  type: string
 
 
 components:
@@ -60,11 +68,14 @@ components:
   schemas:
     RunnerDto:
       required:
+        - "id"
         - "name"
         - "totalRuns"
       description: Return Object of an User
       type: object
       properties:
+        id:
+          type: integer
         name:
           type: string
         totalRuns:

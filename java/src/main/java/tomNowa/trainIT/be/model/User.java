@@ -26,7 +26,7 @@ public class User {
     private String password;
 
 
-    public User(String userName, String password) {
+    public User(final String userName, final String password) {
         this.userName = userName;
         this.password = password;
     }
