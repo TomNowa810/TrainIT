@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface RunRepository extends JpaRepository<Run,Integer> {
 
-    @Query(value = "SELECT COUNT(run_id) FROM runs WHERE user_id = :userId GROUP BY run_id", nativeQuery = true)
+    @Query(value = "SELECT COUNT(run_id) FROM runs WHERE user_id = :userId GROUP BY user_id", nativeQuery = true)
     Optional<Integer> getTotalRuns(final int userId);
 }
