@@ -30,7 +30,7 @@ public class LoginService {
         if (!user.getPassword().equals(password)){
             throw new UserException(LOGIN_ERROR_PASSWORD_INCORRECT);
         }
-        return mapUser2Runner(user);
+        return mapUser2Runner(user, getUsersTotalRuns(user.getId()));
     }
 
     public void createUser(final String userName, final String password){
@@ -42,11 +42,11 @@ public class LoginService {
         userRepo.saveAndFlush(newUser);
     }
 
-    private RunnerDto mapUser2Runner(final User user){
+    private RunnerDto mapUser2Runner(final User user, final int totalRuns){
         return new RunnerDto()
                 .id(user.getId())
                 .name(user.getUserName())
-                .totalRuns(getUsersTotalRuns(user.getId()));
+                .totalRuns(totalRuns);
     }
 
     private int getUsersTotalRuns(final int userId){
