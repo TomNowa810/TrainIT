@@ -48,6 +48,21 @@ paths:
         200:
           description: ok
 
+  /calculation/month/{userId}/{date}:
+    get:
+      operationId: calculation of Month
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/date'
+      responses:
+        200:
+          description: ok
+          content:
+              application/json:
+                schema:
+                  type: object
+                  $ref: '#/components/schemas/RunCalculationDto'
+
 
 components:
   responses:
@@ -60,6 +75,15 @@ components:
               $ref: '#/components/schemas/RunnerDto'
 
   parameters:
+    date:
+      name: date
+      in: path
+      required: true
+      schema:
+        type: date
+        pattern: /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/
+        example: "2019-05-17"
+
     userName:
       name: userName
       in: path
@@ -73,6 +97,13 @@ components:
       required: true
       schema:
         type: string
+
+    userId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: integer
 
     runDto:
       name: runDto
@@ -117,3 +148,20 @@ components:
             type: date
             pattern: /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/
             example: "2019-05-17"
+
+    RunCalculationDto:
+      required:
+        - "avgSecondsPerKm"
+        - "avgKm"
+        - "totalRuns"
+        - "dateTimeRange"
+      type: object
+      properties:
+        avgSecondsPerKm:
+              type: integer
+        avgKm:
+              type: number
+        totalRuns:
+              type: integer
+        dateTimeRange:
+              type: String
