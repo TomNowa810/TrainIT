@@ -5,10 +5,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import tomNowa.trainIT.be.model.Run;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 public interface RunRepository extends JpaRepository<Run,Integer> {
 
     @Query(value = "SELECT COUNT(run_id) FROM runs WHERE user_id = :userId GROUP BY user_id", nativeQuery = true)
     Optional<Integer> getTotalRuns(final int userId);
+
+    @Query(value = "SELECT * FROM runs WHERE user_id = :userId AND date >= :fromDate AND date <= :toDate")
+    List<Run> runsInTimerange(final int userId, final Date fromDate, final Date toDate);
 }

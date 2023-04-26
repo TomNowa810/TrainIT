@@ -41,19 +41,19 @@ paths:
 
   /run/create/{runDto}:
     put:
-      operationId: create Run
+      operationId: createRun
       parameters:
         - $ref: '#/components/parameters/runDto'
       responses:
         200:
           description: ok
 
-  /calculation/month/{userId}/{date}:
+  /calculation/{userId}/{timerange}:
     get:
-      operationId: calculation of Month
+      operationId: calculationOfTimerange
       parameters:
         - $ref: '#/components/parameters/userId'
-        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/timerange'
       responses:
         200:
           description: ok
@@ -75,8 +75,16 @@ components:
               $ref: '#/components/schemas/RunnerDto'
 
   parameters:
-    date:
-      name: date
+    timerange:
+      name: timerange
+      in: path
+      required: true
+      schema:
+        type:
+        $ref: '#/components/schemas/Timerange'
+
+    startDate:
+      name: startDate
       in: path
       required: true
       schema:
@@ -165,3 +173,14 @@ components:
               type: integer
         dateTimeRange:
               type: String
+
+    Timerange:
+      description: Schema for selected Timeranges
+      type: string
+      enum:
+        - LAST_WEEK
+        - LAST_TWO_WEEKS
+        - LAST_MONTH
+        - LAST_QUARTER
+        - HALF_YEAR
+        - LAST_YEAR
