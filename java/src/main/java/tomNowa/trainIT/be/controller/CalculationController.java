@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @RestController
 public class CalculationController implements CalculationApi {
 
-    private CalculationService service;
+    private final CalculationService service;
 
     public CalculationController(final CalculationService service) {
         this.service = service;

@@ -7,6 +7,7 @@ import tomNowa.trainIT.be.model.dto.RunCalculationDto;
 import tomNowa.trainIT.be.model.dto.Timerange;
 import tomNowa.trainIT.be.repository.RunRepository;
 
+import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ import java.util.List;
 @Service
 public class CalculationService {
 
-    private RunRepository repo;
+    private final RunRepository repo;
 
     public CalculationService(final RunRepository repo) {
         this.repo = repo;
@@ -45,9 +46,6 @@ public class CalculationService {
     private RunCalculationDto mapList2CalculationDto(final List<Run> runs){
         final RunCalculationDto dto = new RunCalculationDto();
         dto.setTotalRuns(runs.size());
-
-        //TODO implement correct Timerange Name
-        // dto.setDateTimeRange();
 
         final Pair<Double, Integer> pair = calculateAvgs(runs);
 

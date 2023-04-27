@@ -217,8 +217,6 @@ components:
               type: number
         totalRuns:
               type: integer
-        dateTimeRange:
-              type: String
 
     Timerange:
       description: Schema for selected Timeranges
