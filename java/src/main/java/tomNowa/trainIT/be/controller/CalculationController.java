@@ -19,13 +19,15 @@ public class CalculationController implements CalculationApi {
     }
 
     @Override
-    public ResponseEntity<RunCalculationDto> calculationOfIndividualTimerange(final Integer userId, final LocalDate fromDate, final LocalDate toDate) {
-        return CalculationApi.super.calculationOfIndividualTimerange(userId, fromDate, toDate);
+    public ResponseEntity<RunCalculationDto> calculationOfIndividualTimerange(final Integer userId,
+                                                                              final LocalDate fromDate,
+                                                                              final LocalDate toDate) {
+        return ResponseEntity.ok(service.calculationOfIndividualTimerange(userId, fromDate, toDate));
     }
 
     @Override
     public ResponseEntity<RunCalculationDto> calculationOfLastRuns(final Integer userId, final Integer lastRuns) {
-        return CalculationApi.super.calculationOfLastRuns(userId, lastRuns);
+        return ResponseEntity.ok(service.calculationOfLastRuns(userId, lastRuns));
     }
 
     @Override
