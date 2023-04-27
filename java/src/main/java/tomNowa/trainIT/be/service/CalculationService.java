@@ -7,7 +7,6 @@ import tomNowa.trainIT.be.model.dto.RunCalculationDto;
 import tomNowa.trainIT.be.model.dto.Timerange;
 import tomNowa.trainIT.be.repository.RunRepository;
 
-import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -56,16 +55,16 @@ public class CalculationService {
 
     //TODO implement and calculate progress-seconds
     private Pair<Double,Integer> calculateAvgs(final List<Run> runs){
-        int secondsSum = 0;
+        int secondsAvg = 0;
         double kmSum = 0;
 
         for (final Run run : runs){
-            secondsSum = secondsSum + run.getSeconds();
+            secondsAvg = secondsAvg + Integer.parseInt(String.valueOf(run.getSeconds() / run.getKmNumber()));
             kmSum = kmSum + run.getKmNumber();
         }
 
         final double kmAvg = kmSum / runs.size();
-        final int secondsAvgForKm = secondsSum / runs.size();
+        final int secondsAvgForKm = Integer.parseInt(String.valueOf(secondsAvg / runs.size()));
 
         return Pair.of(kmAvg, secondsAvgForKm);
     }
