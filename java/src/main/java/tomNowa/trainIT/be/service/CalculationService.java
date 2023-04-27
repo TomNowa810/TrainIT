@@ -11,13 +11,11 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CalculationService {
 
     private RunRepository repo;
-
 
     public CalculationService(final RunRepository repo) {
         this.repo = repo;
@@ -29,21 +27,36 @@ public class CalculationService {
         final List<Run> runsInTimerange =
                 repo.runsInTimerange(userId, validTimerange.getFirst(), validTimerange.getSecond());
 
-        return mapList2CalculationDto(runsInTimerange, timerange);
+        return mapList2CalculationDto(runsInTimerange);
     }
 
-    private RunCalculationDto mapList2CalculationDto(final List<Run> runs, final Timerange timerange){
+    public RunCalculationDto calculationOfIndividualTimerange(final int userId, final LocalDate from, final LocalDate to){
+        final List<Run> runsInTimerange = repo.runsInTimerange(userId, Date.valueOf(from), Date.valueOf(to));
+
+        return mapList2CalculationDto(runsInTimerange);
+    }
+
+    public RunCalculationDto calculationOfLastRuns(final int userId, final int numberOfLastRuns){
+        final List<Run> runsInTimerange = repo.lastRuns(userId, numberOfLastRuns);
+
+        return mapList2CalculationDto(runsInTimerange);
+    }
+
+    private RunCalculationDto mapList2CalculationDto(final List<Run> runs){
         final RunCalculationDto dto = new RunCalculationDto();
         dto.setTotalRuns(runs.size());
-        dto.setDateTimeRange(timerange.toString());
+
+        //TODO implement correct Timerange Name
+        // dto.setDateTimeRange();
 
         final Pair<Double, Integer> pair = calculateAvgs(runs);
 
         dto.setAvgKm(BigDecimal.valueOf(pair.getFirst()));
-        dto.setAvgSecondsPerKm(pair.getSecond() );
+        dto.setAvgSecondsPerKm(pair.getSecond());
         return dto;
     }
 
+    //TODO implement and calculate progress-seconds
     private Pair<Double,Integer> calculateAvgs(final List<Run> runs){
         int secondsSum = 0;
         double kmSum = 0;
