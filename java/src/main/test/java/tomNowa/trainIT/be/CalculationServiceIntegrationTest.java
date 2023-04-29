@@ -1,15 +1,19 @@
 package tomNowa.trainIT.be;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import tomNowa.trainIT.be.repository.RunRepository;
 
-@ActiveProfiles("tc")
-@Testcontainers
+
 @SpringBootTest
-@ConfigurationProperties
-public class CalculationServiceIntegrationTest {
+public class CalculationServiceIntegrationTest extends IntegrationTestSetup{
 
+    @Autowired
+    private RunRepository repository;
 
+    @Test
+    void integrationTest(){
+
+    }
 }
