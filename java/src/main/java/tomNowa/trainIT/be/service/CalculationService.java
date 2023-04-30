@@ -17,8 +17,11 @@ public class CalculationService {
 
     private final RunRepository repo;
 
-    public CalculationService(final RunRepository repo) {
+    private final LocalDate localDate;
+
+    public CalculationService(final RunRepository repo, final LocalDate localDate) {
         this.repo = repo;
+        this.localDate = localDate;
     }
 
     public RunCalculationDto createCalculationByTimerange(final int userId, final Timerange timerange){
@@ -70,7 +73,7 @@ public class CalculationService {
     }
 
     private Pair<Date, Date> createValidTimerange(final Timerange timerange){
-        final Date fromDate = Date.valueOf(LocalDate.now());
+        final Date fromDate = Date.valueOf(localDate.now());
 
         return switch (timerange) {
             case LAST_WEEK -> Pair.of(fromDate,
