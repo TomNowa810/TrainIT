@@ -1,5 +1,6 @@
 package tomNowa.trainIT.be;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static tomNowa.trainIT.be.exceptions.UserCodes.*;
 
 @SpringBootTest
-@ActiveProfiles("dev")
-public class LoginServiceIntegrationTest {
+public class LoginServiceIntegrationTest extends IntegrationTestSetup{
 
     @Autowired
     private UserRepository userRepo;
@@ -28,51 +28,38 @@ public class LoginServiceIntegrationTest {
 
     private LoginService sut;
 
-    private final String USER_NAME = "ThomasNixdorf";
-    private final String USER_PASSWORD = "password123";
+    private final User VALID_USER = new User(1,"runningMike", "myPassword123");
+    private final int TOTAL_RUNS_OF_VALID_USER = 3;
 
     @BeforeEach
-    void setUp(){
-        this.sut = new LoginService(userRepo, runRepo);
+    void insertInstance2Container(){
+        sut = new LoginService(userRepo, runRepo);
     }
 
     @Test
-    void integrationTest(){
-        testCheckUser_userIsPresent();
-
-        testCheckUser_userIsNotPresent();
-
-        testCheckUser_userIsPresentWrongPassword();
-
-        testCreateUser_userIsAlreadyPresent();
-
-        testCreateUser_valid();
-    }
-
-    private void testCheckUser_userIsPresent(){
-        final int userId = 2; //DB ID - 2 (USERS DOES NOT GET DELETED)
-
-        final RunnerDto runnerDto = sut.checkUser(USER_NAME, USER_PASSWORD);
+    void testCheckUser_userIsPresent(){
+        final RunnerDto runnerDto = sut.checkUser(VALID_USER.getUserName(), VALID_USER.getPassword());
         assertThat(runnerDto).isNotNull();
-        assertThat(runnerDto.getId()).isEqualTo(userId);
-        assertThat(runnerDto.getName()).isEqualTo(USER_NAME);
+        assertThat(runnerDto.getId()).isEqualTo(1);
+        assertThat(runnerDto.getName()).isEqualTo(VALID_USER.getUserName());
 
-        final int totalRuns = runRepo.getTotalRuns(userId).get();
-
-        assertThat(runnerDto.getTotalRuns()).isEqualTo(totalRuns);
+        assertThat(runnerDto.getTotalRuns()).isEqualTo(TOTAL_RUNS_OF_VALID_USER);
     }
 
-    private void testCheckUser_userIsNotPresent(){
+    @Test
+    void testCheckUser_userIsNotPresent(){
         final Exception exception = assertThrows(UserException.class, () -> sut.checkUser("INVALID", "PASSWORD"));
         assertThat(exception.getMessage()).isEqualTo(LOGIN_ERROR_USER_NOT_REGISTERED.getMessage());
     }
 
-    private void testCheckUser_userIsPresentWrongPassword(){
-        final Exception exception = assertThrows(UserException.class, () -> sut.checkUser(USER_NAME, "INVALID"));
+    @Test
+    void testCheckUser_userIsPresentWrongPassword(){
+        final Exception exception = assertThrows(UserException.class, () -> sut.checkUser(VALID_USER.getUserName(), "INVALID"));
         assertThat(exception.getMessage()).isEqualTo(LOGIN_ERROR_PASSWORD_INCORRECT.getMessage());
     }
 
-    private void testCreateUser_valid(){
+    @Test
+    void testCreateUser_valid(){
         final String userName = "UserNameDummyString";
         final String password = "DummyPassword";
 
@@ -86,12 +73,14 @@ public class LoginServiceIntegrationTest {
         assertThat(newUserTupleResult.getUserName()).isEqualTo(userName);
         assertThat(newUserTupleResult.getPassword()).isEqualTo(password);
         assertThat(newUserTupleResult.getId()).isNotNull();
+        assertThat(newUserTupleResult.getId()).isEqualTo(2);
 
         userRepo.delete(newUserTupleResult);
     }
 
-    private void testCreateUser_userIsAlreadyPresent(){
-        final Exception exception = assertThrows(UserException.class, () -> sut.createUser(USER_NAME, "PASSWORD"));
+    @Test
+    void testCreateUser_userIsAlreadyPresent(){
+        final Exception exception = assertThrows(UserException.class, () -> sut.createUser(VALID_USER.getUserName(), "PASSWORD"));
         assertThat(exception.getMessage()).isEqualTo(CREATION_ERROR_USER_ALREADY_EXIST.getMessage());
     }
 }

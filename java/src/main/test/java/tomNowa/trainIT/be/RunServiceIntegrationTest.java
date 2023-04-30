@@ -19,8 +19,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@ActiveProfiles("dev")
-public class RunServiceIntegrationTest {
+public class RunServiceIntegrationTest extends IntegrationTestSetup{
 
     @Autowired
     private RunRepository repo;
@@ -28,7 +27,7 @@ public class RunServiceIntegrationTest {
     private RunService sut;
 
     // Runs always refer to only one User
-    private final int USER_ID = 3;
+    private final int USER_ID = 1;
 
     @BeforeEach
     void setup() {
@@ -41,6 +40,7 @@ public class RunServiceIntegrationTest {
         final RunDto runInputEntity = createEntity();
 
         final int numberOfRuns_beforeCall = repo.getTotalRuns(USER_ID).get();
+        assertThat(numberOfRuns_beforeCall).isEqualTo(3);
 
         sut.createRun(runInputEntity);
 
@@ -57,12 +57,6 @@ public class RunServiceIntegrationTest {
                 .isEqualTo(Double.valueOf(runInputEntity.getKmNumber().toString()));
         assertThat(runResultEntity.getDate())
                 .isEqualTo(Date.from(runInputEntity.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-
-        deleteEntity(runResultEntity.getRunId());
-    }
-
-    private void deleteEntity(final int expectedEntityId){
-        repo.deleteById(expectedEntityId);
     }
 
     private Run getLatestInsertedRun(){
@@ -75,7 +69,7 @@ public class RunServiceIntegrationTest {
         runDto.userId(USER_ID);
         runDto.kmNumber(10);
         runDto.seconds(111111);
-        runDto.date(LocalDate.now());
+        runDto.date(LocalDate.of(2022,6,30));
 
         return runDto;
     }
