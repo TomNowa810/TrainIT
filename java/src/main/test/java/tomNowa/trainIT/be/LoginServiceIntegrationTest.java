@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static tomNowa.trainIT.be.exceptions.UserCodes.*;
 
 @SpringBootTest
-public class LoginServiceIntegrationTest extends IntegrationTestSetup{
+public class LoginServiceIntegrationTest extends IntegrationTestSetup {
 
     @Autowired
     private UserRepository userRepo;
@@ -28,16 +28,16 @@ public class LoginServiceIntegrationTest extends IntegrationTestSetup{
 
     private LoginService sut;
 
-    private final User VALID_USER = new User(1,"runningMike", "myPassword123");
+    private final User VALID_USER = new User(1, "runningMike", "myPassword123");
     private final int TOTAL_RUNS_OF_VALID_USER = 3;
 
     @BeforeEach
-    void insertInstance2Container(){
+    void setUp() {
         sut = new LoginService(userRepo, runRepo);
     }
 
     @Test
-    void testCheckUser_userIsPresent(){
+    void testCheckUser_userIsPresent() {
         final RunnerDto runnerDto = sut.checkUser(VALID_USER.getUserName(), VALID_USER.getPassword());
         assertThat(runnerDto).isNotNull();
         assertThat(runnerDto.getId()).isEqualTo(1);
@@ -47,19 +47,19 @@ public class LoginServiceIntegrationTest extends IntegrationTestSetup{
     }
 
     @Test
-    void testCheckUser_userIsNotPresent(){
+    void testCheckUser_userIsNotPresent() {
         final Exception exception = assertThrows(UserException.class, () -> sut.checkUser("INVALID", "PASSWORD"));
         assertThat(exception.getMessage()).isEqualTo(LOGIN_ERROR_USER_NOT_REGISTERED.getMessage());
     }
 
     @Test
-    void testCheckUser_userIsPresentWrongPassword(){
+    void testCheckUser_userIsPresentWrongPassword() {
         final Exception exception = assertThrows(UserException.class, () -> sut.checkUser(VALID_USER.getUserName(), "INVALID"));
         assertThat(exception.getMessage()).isEqualTo(LOGIN_ERROR_PASSWORD_INCORRECT.getMessage());
     }
 
     @Test
-    void testCreateUser_valid(){
+    void testCreateUser_valid() {
         final String userName = "UserNameDummyString";
         final String password = "DummyPassword";
 
@@ -79,7 +79,7 @@ public class LoginServiceIntegrationTest extends IntegrationTestSetup{
     }
 
     @Test
-    void testCreateUser_userIsAlreadyPresent(){
+    void testCreateUser_userIsAlreadyPresent() {
         final Exception exception = assertThrows(UserException.class, () -> sut.createUser(VALID_USER.getUserName(), "PASSWORD"));
         assertThat(exception.getMessage()).isEqualTo(CREATION_ERROR_USER_ALREADY_EXIST.getMessage());
     }
