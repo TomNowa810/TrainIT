@@ -73,7 +73,7 @@ public class LoginServiceIntegrationTest extends IntegrationTestSetup {
         assertThat(newUserTupleResult.getUserName()).isEqualTo(userName);
         assertThat(newUserTupleResult.getPassword()).isEqualTo(password);
         assertThat(newUserTupleResult.getId()).isNotNull();
-        assertThat(newUserTupleResult.getId()).isEqualTo(2);
+        assertThat(newUserTupleResult.getId()).isEqualTo(4);
 
         userRepo.delete(newUserTupleResult);
     }

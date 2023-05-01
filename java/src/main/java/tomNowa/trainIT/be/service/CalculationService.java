@@ -2,6 +2,7 @@ package tomNowa.trainIT.be.service;
 
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
+import tomNowa.trainIT.be.exceptions.UserException;
 import tomNowa.trainIT.be.model.Run;
 import tomNowa.trainIT.be.model.dto.RunCalculationDto;
 import tomNowa.trainIT.be.model.dto.Timerange;
@@ -12,16 +13,15 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
+import static tomNowa.trainIT.be.exceptions.UserCodes.USER_HAS_NO_RUNS_IN_TIMERANGE;
+
 @Service
 public class CalculationService {
 
     private final RunRepository repo;
 
-    private final LocalDate localDate;
-
-    public CalculationService(final RunRepository repo, final LocalDate localDate) {
+    public CalculationService(final RunRepository repo) {
         this.repo = repo;
-        this.localDate = localDate;
     }
 
     public RunCalculationDto createCalculationByTimerange(final int userId, final Timerange timerange){
@@ -30,20 +30,32 @@ public class CalculationService {
         final List<Run> runsInTimerange =
                 repo.runsInTimerange(userId, validTimerange.getFirst(), validTimerange.getSecond());
 
+        if (runsInTimerange.isEmpty()){
+            throw new UserException(USER_HAS_NO_RUNS_IN_TIMERANGE);
+        }
+
         return mapList2CalculationDto(runsInTimerange);
     }
 
     public RunCalculationDto calculationOfIndividualTimerange(final int userId, final LocalDate from, final LocalDate to){
         final List<Run> runsInTimerange = repo.runsInTimerange(userId, Date.valueOf(from), Date.valueOf(to));
 
-        return mapList2CalculationDto(runsInTimerange);
-    }
-
-    public RunCalculationDto calculationOfLastRuns(final int userId, final int numberOfLastRuns){
-        final List<Run> runsInTimerange = repo.lastRuns(userId, numberOfLastRuns);
+        if (runsInTimerange.isEmpty()){
+            throw new UserException(USER_HAS_NO_RUNS_IN_TIMERANGE);
+        }
 
         return mapList2CalculationDto(runsInTimerange);
     }
+
+ //  public RunCalculationDto calculationOfLastRuns(final int userId, final int numberOfLastRuns){
+ //      final List<Run> runsInTimerange = repo.lastRuns(userId, numberOfLastRuns);
+
+ //      if (runsInTimerange.isEmpty()){
+ //          throw new UserException(USER_HAS_NO_RUNS_IN_TIMERANGE);
+ //      }
+
+ //      return mapList2CalculationDto(runsInTimerange);
+ //  }
 
     private RunCalculationDto mapList2CalculationDto(final List<Run> runs){
         final RunCalculationDto dto = new RunCalculationDto();
@@ -58,22 +70,22 @@ public class CalculationService {
 
     //TODO implement and calculate progress-seconds
     private Pair<Double,Integer> calculateAvgs(final List<Run> runs){
-        int secondsAvg = 0;
+        double secondsAvg = 0;
         double kmSum = 0;
 
         for (final Run run : runs){
-            secondsAvg = secondsAvg + Integer.parseInt(String.valueOf(run.getSeconds() / run.getKmNumber()));
+            secondsAvg = secondsAvg + run.getSeconds() / run.getKmNumber();
             kmSum = kmSum + run.getKmNumber();
         }
 
         final double kmAvg = kmSum / runs.size();
-        final int secondsAvgForKm = Integer.parseInt(String.valueOf(secondsAvg / runs.size()));
+        final int secondsAvgForKm = (int) secondsAvg / runs.size();
 
         return Pair.of(kmAvg, secondsAvgForKm);
     }
 
     private Pair<Date, Date> createValidTimerange(final Timerange timerange){
-        final Date fromDate = Date.valueOf(localDate.now());
+        final Date fromDate = Date.valueOf(LocalDate.now());
 
         return switch (timerange) {
             case LAST_WEEK -> Pair.of(fromDate,
