@@ -14,6 +14,8 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 @SpringBootTest
 public class CalculationServiceIntegrationTest extends IntegrationTestSetup{
@@ -40,7 +42,11 @@ public class CalculationServiceIntegrationTest extends IntegrationTestSetup{
 
         final RunCalculationDto returnedCalculation = sut.createCalculationByTimerange(USER_ID, Timerange.LAST_WEEK);
 
-        System.out.println(returnedCalculation);
+        assertThat(returnedCalculation).isNotNull();
+        assertThat(returnedCalculation.getTotalRuns()).isEqualTo(3);
+        assertThat(returnedCalculation.getAvgKm()).isEqualTo(expectedCalculation.getAvgKm());
+        assertThat(returnedCalculation.getAvgSecondsPerKm()).isEqualTo(expectedCalculation.getAvgSecondsPerKm());
+        assertThat(returnedCalculation).isEqualTo(expectedCalculation);
     }
 
     private void setUpRuns(){
@@ -49,15 +55,15 @@ public class CalculationServiceIntegrationTest extends IntegrationTestSetup{
         repository.saveAndFlush(new Run(7,2,4.48,1630, setUpDate(24)));
         repository.saveAndFlush(new Run(8,2,4.65,1680, setUpDate(23)));
         repository.saveAndFlush(new Run(9,2,4.58,1685, setUpDate(20)));
-        repository.saveAndFlush(new Run(10,2,5.78,1960, setUpDate(19)));
-        repository.saveAndFlush(new Run(10,3,9.75,3630, setUpDate(16)));
-        repository.saveAndFlush(new Run(10,3,7.9,2570, setUpDate(13)));
-        repository.saveAndFlush(new Run(10,2,4.75,1730, setUpDate(12)));
-        repository.saveAndFlush(new Run(10,3,4.75,1736, setUpDate(10)));
-        repository.saveAndFlush(new Run(10,2,4.95,1800, setUpDate(8)));
-        repository.saveAndFlush(new Run(10,2,6.30,1960, setUpDate(5)));
-        repository.saveAndFlush(new Run(10,2,4.05,1430, setUpDate(3)));
-        repository.saveAndFlush(new Run(10,2,6.85,2023, setUpDate(1)));
+        repository.saveAndFlush(new Run(11,2,5.78,1960, setUpDate(19)));
+        repository.saveAndFlush(new Run(12,3,9.75,3630, setUpDate(16)));
+        repository.saveAndFlush(new Run(13,3,7.9,2570, setUpDate(13)));
+        repository.saveAndFlush(new Run(14,2,4.75,1730, setUpDate(12)));
+        repository.saveAndFlush(new Run(15,3,4.75,1736, setUpDate(10)));
+        repository.saveAndFlush(new Run(16,2,4.95,1800, setUpDate(8)));
+        repository.saveAndFlush(new Run(17,2,6.30,1960, setUpDate(5)));
+        repository.saveAndFlush(new Run(18,2,4.05,1430, setUpDate(3)));
+        repository.saveAndFlush(new Run(19,2,6.85,2023, setUpDate(1)));
     }
 
     private Date setUpDate(final int minusDays){

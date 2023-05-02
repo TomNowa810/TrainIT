@@ -79,9 +79,11 @@ public class CalculationService {
         }
 
         final double kmAvg = kmSum / runs.size();
+        final double kmAvgRounded = Math.round(100.0 * kmAvg) / 100.0;
+
         final int secondsAvgForKm = (int) secondsAvg / runs.size();
 
-        return Pair.of(kmAvg, secondsAvgForKm);
+        return Pair.of(kmAvgRounded, secondsAvgForKm);
     }
 
     private Pair<Date, Date> createValidTimerange(final Timerange timerange){
