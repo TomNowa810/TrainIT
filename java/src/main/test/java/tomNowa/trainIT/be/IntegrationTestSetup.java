@@ -1,17 +1,19 @@
 package tomNowa.trainIT.be;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Testcontainers
 public abstract class IntegrationTestSetup {
 
-    @Container
     public static MySQLContainer container = (MySQLContainer) new MySQLContainer("mysql:latest")
-            .withInitScript("data.sql");
+            .withInitScript("data.sql").withReuse(true);
+
+    @BeforeAll
+    static void start() {
+        container.start();
+    }
 
     @DynamicPropertySource
     public static void overrideProps(final DynamicPropertyRegistry registry){
@@ -47,5 +49,23 @@ public abstract class IntegrationTestSetup {
                    - The Dockercontainer doesn't stop and still runs after all executed tests
                    - You work with an already used or integrated Dataset
 
+     */
+
+    /*
+        xX OLD SCHOOL WAY: Xx
+
+            @Testcontainers
+            public abstract class IntegrationTestSetup {
+
+                 @Container
+                 public static MySQLContainer container = (MySQLContainer) new MySQLContainer("mysql:latest")
+                         .withInitScript("data.sql").withReuse(true);
+
+                @DynamicPropertySource
+                public static void overrideProps(final DynamicPropertyRegistry registry){
+                    registry.add("spring.datasource.url", container::getJdbcUrl);
+                    registry.add("spring.datasource.username", container::getUsername);
+                    registry.add("spring.datasource.password", container::getPassword);
+                }
      */
 }
