@@ -24,40 +24,40 @@ public class CalculationService {
         this.repo = repo;
     }
 
-    public RunCalculationDto createCalculationByTimerange(final int userId, final Timerange timerange){
+    public RunCalculationDto createCalculationByTimerange(final int userId, final Timerange timerange) {
         final Pair<Date, Date> validTimerange = createValidTimerange(timerange);
 
         final List<Run> runsInTimerange =
                 repo.runsInTimerange(userId, validTimerange.getFirst(), validTimerange.getSecond());
 
-        if (runsInTimerange.isEmpty()){
+        if (runsInTimerange.isEmpty()) {
             throw new UserException(USER_HAS_NO_RUNS_IN_TIMERANGE);
         }
 
         return mapList2CalculationDto(runsInTimerange);
     }
 
-    public RunCalculationDto calculationOfIndividualTimerange(final int userId, final LocalDate from, final LocalDate to){
+    public RunCalculationDto calculationOfIndividualTimerange(final int userId, final LocalDate from, final LocalDate to) {
         final List<Run> runsInTimerange = repo.runsInTimerange(userId, Date.valueOf(from), Date.valueOf(to));
 
-        if (runsInTimerange.isEmpty()){
+        if (runsInTimerange.isEmpty()) {
             throw new UserException(USER_HAS_NO_RUNS_IN_TIMERANGE);
         }
 
         return mapList2CalculationDto(runsInTimerange);
     }
 
- //  public RunCalculationDto calculationOfLastRuns(final int userId, final int numberOfLastRuns){
- //      final List<Run> runsInTimerange = repo.lastRuns(userId, numberOfLastRuns);
+    public RunCalculationDto calculationOfLastRuns(final int userId, final int numberOfLastRuns) {
+        final List<Run> runsInTimerange = repo.lastRuns(userId, numberOfLastRuns);
 
- //      if (runsInTimerange.isEmpty()){
- //          throw new UserException(USER_HAS_NO_RUNS_IN_TIMERANGE);
- //      }
+        if (runsInTimerange.isEmpty()) {
+            throw new UserException(USER_HAS_NO_RUNS_IN_TIMERANGE);
+        }
 
- //      return mapList2CalculationDto(runsInTimerange);
- //  }
+        return mapList2CalculationDto(runsInTimerange);
+    }
 
-    private RunCalculationDto mapList2CalculationDto(final List<Run> runs){
+    private RunCalculationDto mapList2CalculationDto(final List<Run> runs) {
         final RunCalculationDto dto = new RunCalculationDto();
         dto.setTotalRuns(runs.size());
 
@@ -69,11 +69,11 @@ public class CalculationService {
     }
 
     //TODO implement and calculate progress-seconds
-    private Pair<Double,Integer> calculateAvgs(final List<Run> runs){
+    private Pair<Double, Integer> calculateAvgs(final List<Run> runs) {
         double secondsAvg = 0;
         double kmSum = 0;
 
-        for (final Run run : runs){
+        for (final Run run : runs) {
             secondsAvg = secondsAvg + run.getSeconds() / run.getKmNumber();
             kmSum = kmSum + run.getKmNumber();
         }
@@ -86,7 +86,7 @@ public class CalculationService {
         return Pair.of(kmAvgRounded, secondsAvgForKm);
     }
 
-    private Pair<Date, Date> createValidTimerange(final Timerange timerange){
+    private Pair<Date, Date> createValidTimerange(final Timerange timerange) {
         final Date fromDate = Date.valueOf(LocalDate.now());
 
         return switch (timerange) {

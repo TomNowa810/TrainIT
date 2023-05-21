@@ -9,14 +9,14 @@ import tomNowa.trainIT.be.service.RunService;
 @RestController
 public class RunController implements RunApi {
 
-    private RunService service;
+    private final RunService service;
 
-    public RunController(final RunService runService){
+    public RunController(final RunService runService) {
         this.service = runService;
     }
 
     @Override
-    public ResponseEntity<Void> createRun(final RunDto runDto){
+    public ResponseEntity<Void> createRun(final RunDto runDto) {
         service.createRun(runDto);
 
         return ResponseEntity.ok().build();

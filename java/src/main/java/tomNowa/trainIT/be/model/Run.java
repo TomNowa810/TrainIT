@@ -1,4 +1,5 @@
 package tomNowa.trainIT.be.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -7,7 +7,7 @@ public class UserException extends RuntimeException {
     @Getter
     private final String message;
 
-    public UserException(final UserCodes exceptionCode){
+    public UserException(final UserCodes exceptionCode) {
         this.message = exceptionCode.getMessage();
     }
 }

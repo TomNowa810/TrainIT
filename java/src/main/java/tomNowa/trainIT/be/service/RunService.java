@@ -17,12 +17,12 @@ public class RunService {
         this.repo = repo;
     }
 
-    public void createRun(final RunDto runDto){
+    public void createRun(final RunDto runDto) {
         final Run newRun = map2Run(runDto);
         repo.saveAndFlush(newRun);
     }
 
-    private Run map2Run(final RunDto runDto){
+    private Run map2Run(final RunDto runDto) {
         final Date date = Date.from(runDto.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
         return new Run(
                 runDto.getUserId(),

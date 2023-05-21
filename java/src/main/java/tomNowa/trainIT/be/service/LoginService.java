@@ -17,41 +17,41 @@ public class LoginService {
     private final UserRepository userRepo;
     private final RunRepository runRepo;
 
-    public LoginService(final UserRepository userRepo, final RunRepository runRepo){
+    public LoginService(final UserRepository userRepo, final RunRepository runRepo) {
         this.userRepo = userRepo;
         this.runRepo = runRepo;
     }
 
-    public RunnerDto checkUser(final String userName, final String password){
+    public RunnerDto checkUser(final String userName, final String password) {
         final User user = userRepo.findByUserName(userName);
-        if (user == null){
+        if (user == null) {
             throw new UserException(LOGIN_ERROR_USER_NOT_REGISTERED);
         }
-        if (!user.getPassword().equals(password)){
+        if (!user.getPassword().equals(password)) {
             throw new UserException(LOGIN_ERROR_PASSWORD_INCORRECT);
         }
         return mapUser2Runner(user, getUsersTotalRuns(user.getId()));
     }
 
-    public void createUser(final String userName, final String password){
+    public void createUser(final String userName, final String password) {
         final User user = userRepo.findByUserName(userName);
-        if (user != null){
+        if (user != null) {
             throw new UserException(CREATION_ERROR_USER_ALREADY_EXIST);
         }
         final User newUser = new User(userName, password);
         userRepo.saveAndFlush(newUser);
     }
 
-    private RunnerDto mapUser2Runner(final User user, final int totalRuns){
+    private RunnerDto mapUser2Runner(final User user, final int totalRuns) {
         return new RunnerDto()
                 .id(user.getId())
                 .name(user.getUserName())
                 .totalRuns(totalRuns);
     }
 
-    private int getUsersTotalRuns(final int userId){
+    private int getUsersTotalRuns(final int userId) {
         final Optional<Integer> totalRuns = runRepo.getTotalRuns(userId);
-        if (totalRuns.isEmpty()){
+        if (totalRuns.isEmpty()) {
             return 0;
         }
         return totalRuns.get();
