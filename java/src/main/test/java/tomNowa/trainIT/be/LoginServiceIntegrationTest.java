@@ -1,5 +1,6 @@
 package tomNowa.trainIT.be;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ public class LoginServiceIntegrationTest extends IntegrationTestSetup {
     private LoginService sut;
 
     private final User VALID_USER = new User(1, "runningMike", "myPassword123");
-    private final int TOTAL_RUNS_OF_VALID_USER = 3;
+    private final int TOTAL_RUNS_OF_VALID_USER = 4;
 
     @BeforeEach
     void setUp() {

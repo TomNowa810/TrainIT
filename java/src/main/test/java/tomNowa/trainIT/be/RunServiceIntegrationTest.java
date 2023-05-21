@@ -1,5 +1,6 @@
 package tomNowa.trainIT.be;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class RunServiceIntegrationTest extends IntegrationTestSetup{
         final RunDto runInputEntity = createEntity();
 
         final int numberOfRuns_beforeCall = repo.getTotalRuns(USER_ID).get();
-        assertThat(numberOfRuns_beforeCall).isEqualTo(3);
+        assertThat(numberOfRuns_beforeCall).isEqualTo(4);
 
         sut.createRun(runInputEntity);
 
