@@ -1,19 +1,17 @@
 package tomNowa.trainIT.be;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
+@Testcontainers
 public abstract class IntegrationTestSetup {
 
+    @Container
     public static MySQLContainer container = (MySQLContainer) new MySQLContainer("mysql:latest")
-            .withInitScript("data.sql").withReuse(true);
-
-    @BeforeAll
-    static void start() {
-        container.start();
-    }
+            .withInitScript("data.sql");
 
     @DynamicPropertySource
     public static void overrideProps(final DynamicPropertyRegistry registry){
@@ -59,7 +57,7 @@ public abstract class IntegrationTestSetup {
 
                  @Container
                  public static MySQLContainer container = (MySQLContainer) new MySQLContainer("mysql:latest")
-                         .withInitScript("data.sql").withReuse(true);
+                         .withInitScript("data.sql");
 
                 @DynamicPropertySource
                 public static void overrideProps(final DynamicPropertyRegistry registry){
