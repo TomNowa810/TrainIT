@@ -3,14 +3,13 @@
     <h1 class="title">Login - TrainIt</h1>
 
     <div class="item-width">
-        <input class="p-inputgroup shadow-5" [(ngModel)]="_usernameValue" pInputText placeholder="Username"/>
-        <input class="p-inputgroup shadow-5" [(ngModel)]="_passwordValue" pInputText type="password" placeholder = "Password" (keydown.enter)="_submitLoginCredentials()">
+        <input class="shadow-5" [(ngModel)]="_usernameValue" placeholder="Username"/>
+        <input class="shadow-5" [(ngModel)]="_passwordValue" type="password" placeholder = "Password" (keydown.enter)="_submitLoginCredentials()">
     </div>
-    <p-button
+    <button
         class="input-center-screen" 
         label="Login" 
-        styleClass="p-button-raised p-button-text text-primary-600 shadow-7"
-        (click)="_submitLoginCredentials()"
-        ></p-button>
+        styleClass=""
+        (click)="_submitLoginCredentials()"></button>
 </div>
 <app-dashboard *ngIf="_loginPassed"></app-dashboard>

@@ -1,14 +1,14 @@
-<p-button
+<button
 class="input-center-screen" 
 label="New Run" 
-styleClass="p-button-raised p-button-text text-primary-600 shadow-7"
+styleClass=""
 (click)="_formularInput()"
-></p-button>
+></button>
 
 <div *ngIf="_isLogin">
     <div class="item-width" (keydown.enter)="_submitFormular()">
-        <input class="p-inputgroup shadow-5" [(ngModel)]="_kmNumber" pInputText pKeyFilter="number" placeholder="Number of kilometers"/>
-        <p-calendar class="_date shadow-5" [(ngModel)]="_date" placeholder="Date of Run" dateFormat="dd.mm.yy" [showButtonBar]="true" [showIcon]="true"></p-calendar>
+        <input class="shadow-5" [(ngModel)]="_kmNumber" placeholder="Number of kilometers"/>
+        <calendar class="_date shadow-5" [(ngModel)]="_date" placeholder="Date of Run" dateFormat="dd.mm.yy"></calendar>
 
     </div>
 </div>
