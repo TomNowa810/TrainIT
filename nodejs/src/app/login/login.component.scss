@@ -1,24 +1,74 @@
-.input-center-screen {
+body{
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    min-height: 10vh;
+}
+
+input {
+    width: 22%;
+    line-height: 2em;
+    padding: 10px;
+    border-radius: 10em;
     opacity: 0.8;
 }
 
-.item-width {
-    width: 22%;
-    position: relative;
-    opacity: 0.85;
-    left: 39%;
+.positioningFirst {
+    position: absolute;
+    display: grid;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.positioningSecond {
+    position: absolute;
+    display: grid;
+    top: 37%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.8;
+    width: 9em;
+    height: 3em;
+    border-radius: 30em;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.button::before {
+    content: '';
+    width: 0;
+    height: 3em;
+    border-radius: 30em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(
+        to left, #0f4fd8 0%, #47cff9 100%);
+    transition: .5s ease;
+    display: block;
+    z-index: -1;    
+}
+
+.button:hover:before {
+    width: 9em;
 }
 
 .image {
-      position: absolute;
-      top: 0px;
-      left: 47%;
-      float: right;
+    position: absolute;
+    top: 0;
+    left: 36%;
+    float: right;
 }
 
 .title {
