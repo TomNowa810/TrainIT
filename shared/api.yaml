@@ -132,7 +132,7 @@ components:
         example: "2019-05-17"
 
     numberOfLastRuns:
-      name: lastRuns
+      name: numberOfLastRuns
       in: path
       required: true
       schema:
