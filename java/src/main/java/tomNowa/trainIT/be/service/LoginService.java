@@ -24,11 +24,8 @@ public class LoginService {
 
     public RunnerDto checkUser(final String userName, final String password) {
         final User user = userRepo.findByUserName(userName);
-        if (user == null) {
-            throw new UserException(LOGIN_ERROR_USER_NOT_REGISTERED);
-        }
-        if (!user.getPassword().equals(password)) {
-            throw new UserException(LOGIN_ERROR_PASSWORD_INCORRECT);
+        if (user == null || !user.getPassword().equals(password)) {
+            return null;
         }
         return mapUser2Runner(user, getUsersTotalRuns(user.getId()));
     }

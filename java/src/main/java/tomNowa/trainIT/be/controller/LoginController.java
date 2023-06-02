@@ -22,7 +22,11 @@ public class LoginController implements LoginApi {
     //TODO INTEGRATE CONTROLLER ADVICE
     @Override
     public ResponseEntity<RunnerDto> checkLogin(final String userName, final String password) {
-        return ResponseEntity.ok().body(service.checkUser(userName, password));
+        final RunnerDto runnerDto = service.checkUser(userName, password);
+        if (runnerDto == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().body(runnerDto);
     }
 
     //TODO INTEGRATE CONTROLLER ADVICE
@@ -33,7 +37,7 @@ public class LoginController implements LoginApi {
             return ResponseEntity.ok().body(SUCCESSFUL_USER_CREATION.getMessage());
 
         } catch (final UserException userException) {
-            return ResponseEntity.badRequest().body(userException.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
 
