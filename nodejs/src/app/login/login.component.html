@@ -8,6 +8,10 @@
     <button
         class="button"
         label="Login" 
-        (click)="_submitLoginCredentials()">Login</button> 
+        (click)="_submitLoginCredentials()">Login</button>    
+
+    <button
+        class="button buttonAddUser"
+        label="AddNewUser">Registration</button>    
 </div>
 <app-dashboard *ngIf="_loginPassed"></app-dashboard>
