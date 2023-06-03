@@ -13,12 +13,14 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OpenAPI } from 'build/openapi';
 import { CalendarModule } from 'primeng/calendar';
+import { CreateRunDialogueComponent } from './create-run-dialogue/create-run-dialogue.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    CreateRunDialogueComponent
   ],
   imports: [
     BrowserModule,

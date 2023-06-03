@@ -1,0 +1,46 @@
+.posNumberInp {
+    position: relative;
+}
+
+.inputDiv {
+    position: relative;
+    top: 20px;
+    height:50px;
+}
+
+.adjustInpNumbers {
+    position: relative;
+    width: 200px;
+}
+
+.adjustSaveBtn {
+    position: relative;
+    z-index: 0;
+    left: 70%;
+}
+
+.adjustment4Btn {
+    top: 20px;
+}
+
+.date {
+    position: relative;
+    top: 30%;
+    width: 200px;
+    height: 2.5em;
+}
+
+
+dialog {
+    border: none !important;
+
+    position: absolute;
+
+    top: 30%;
+    left: 17.5%;
+    transform: translate(-50%, -50%);
+
+    border-radius: calc(5px * var(--ratio));
+    box-shadow: 0 0 #003cff00, 0 0 #003cff00, 0 25px 50px -12px rgba(0, 17, 255, 0.25);
+    padding: 1.6rem;
+}
