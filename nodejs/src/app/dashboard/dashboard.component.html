@@ -1,14 +1,6 @@
 <button
-class="input-center-screen" 
+class="button create-run-btn" 
 label="New Run" 
-styleClass=""
-(click)="_formularInput()"
-></button>
+(click)="_formularInput()">Create Run</button>
+<div *ngIf="_dialogueOpen" app-create-run-dialogue></div>
 
-<div *ngIf="_isLogin">
-    <div class="item-width" (keydown.enter)="_submitFormular()">
-        <input class="shadow-5" [(ngModel)]="_kmNumber" placeholder="Number of kilometers"/>
-        <calendar class="_date shadow-5" [(ngModel)]="_date" placeholder="Date of Run" dateFormat="dd.mm.yy"></calendar>
-
-    </div>
-</div>
