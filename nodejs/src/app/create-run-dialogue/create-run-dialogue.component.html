@@ -1,16 +1,19 @@
-<div class="dialogue-box" (keydown.enter)="_submitFormular()">
+<div (keydown.enter)="_submitFormular()">
     <dialog open>
         <h1>Lauf eintragen</h1>
         <div class="inputDiv"> 
-            <input class="adjustInpNumbers" [(ngModel)]="_kmNumber" placeholder="Number of kilometers"/>
+            <p>Anzahl Kilometer</p>
+            <input type="number" class="adjustInpNumbers" [(ngModel)]="_kmNumber" placeholder="Km Anzahl"/>
         </div>
         <div class="inputDiv"> 
-            <input class="adjustInpNumbers" placeholder="Number of minutes">
+            <p>Anzahl Minuten</p>
+            <input type="number" class="adjustInpNumbers" placeholder="Minuten Anzahl">
         </div>
         <div class="inputDiv"> 
+            <p>Tag des Laufes</p>
             <input type="date" class="date">
         </div>
-        <div class="inputDiv adjustment4Btn"> 
+        <div class="inputDiv"> 
             <button class="button adjustSaveBtn">Speichern</button>
         </div>
     </dialog>
