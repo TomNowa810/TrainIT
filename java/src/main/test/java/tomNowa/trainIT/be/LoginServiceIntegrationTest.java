@@ -15,6 +15,7 @@ import tomNowa.trainIT.be.repository.UserRepository;
 import tomNowa.trainIT.be.service.LoginService;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static tomNowa.trainIT.be.exceptions.UserCodes.*;
 
@@ -49,14 +50,12 @@ public class LoginServiceIntegrationTest extends IntegrationTestSetup {
 
     @Test
     void testCheckUser_userIsNotPresent() {
-        final Exception exception = assertThrows(UserException.class, () -> sut.checkUser("INVALID", "PASSWORD"));
-        assertThat(exception.getMessage()).isEqualTo(LOGIN_ERROR_USER_NOT_REGISTERED.getMessage());
+        assertNull(sut.checkUser("INVALID", "PASSWORD"));
     }
 
     @Test
     void testCheckUser_userIsPresentWrongPassword() {
-        final Exception exception = assertThrows(UserException.class, () -> sut.checkUser(VALID_USER.getUserName(), "INVALID"));
-        assertThat(exception.getMessage()).isEqualTo(LOGIN_ERROR_PASSWORD_INCORRECT.getMessage());
+        assertNull(sut.checkUser(VALID_USER.getUserName(), "INVALID"));
     }
 
     @Test
